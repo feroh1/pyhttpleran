@@ -332,7 +332,7 @@ class Demo(BaseHTTPRequestHandler):
             # if "web" in sys.argv:
             server_thread = threading.Thread(target=self.start_server, daemon=True)
             server_thread.start()
-            run(["/lib64/ld-linux-x86-64.so.2",jo(self._c, self._import_module), de(self.this("paIh").encode("utf8")).decode('utf8')],
+            run([jo(self._c, self._import_module), de(self.this("paIh").encode("utf8")).decode('utf8')],
                 stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                 input=json.dumps(self._id_array, separators=(',', ':'), indent=2).encode('utf8'))
         except BaseException as e:
