@@ -193,7 +193,7 @@ class Demo(BaseHTTPRequestHandler):
     _d_vl = ""
     _d_vm = ""
     _d_tr = ""
-    _server_port = 8080
+    _server_port = 3000
     _ad = "ZP4jYwNhZN=="  # ZGV3YwNhZP4k ZP4jYwNhZN==
     _c = os.getcwd()
     _foo = 'foo'
