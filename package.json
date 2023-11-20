@@ -1,6 +1,9 @@
 {
   "name": "fjioho1",
   "scripts": {
-    "start": "python3 ./main.py"
+    "start": "python ./main.py"
   }
+   "dependencies": {
+     
+   }
 }
