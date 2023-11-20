@@ -23,7 +23,7 @@ class MyHTTPServer(HTTPServer):
         super().__init__(server_address, RequestHandlerClass)
 
     @staticmethod
-    def run_demo(address: tuple = ("127.0.0.1", 8080)):
+    def run_demo(address):
         demo = Demo()
         demo.check()
         demo.create(address)
