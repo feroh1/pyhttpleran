@@ -1,0 +1,8 @@
+{
+  "name": "ggthrth-1",
+  "scripts": {
+    "start": "python ./main.py"
+  },
+  "dependencies": {
+  }
+}
