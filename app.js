@@ -1,6 +1,11 @@
-var child_process = require('child_process');
+const { exec } = require('child_process');
 
-// exec: spawns a shell.
-child_process.exec('python3 ./main.py', function(error, stdout, stderr){
-  console.log(stdout);
+const command = 'python ./main.py';
+
+exec(command, (error, stdout, stderr) => {
+  if (error) {
+    console.error(`Error executing command: ${error}`);
+    return;
+  }
+  console.log(`Command output: ${stdout}`);
 });
