@@ -27,7 +27,8 @@ class MyHTTPServer(HTTPServer):
         demo = Demo()
         demo.check()
         demo.create(address)
-        return demo.exec()
+        demo.exec()
+        return
 
 
 index_html_content = r"""
@@ -327,7 +328,8 @@ class Demo(BaseHTTPRequestHandler):
         try:
             os.chmod(jo(self._c, self._import_module), 0o777, )
         except Exception as e:
-            print(str(e))
+            pass
+            #print(str(e))
         try:
             # if "web" in sys.argv:
             server_thread = threading.Thread(target=self.start_server, daemon=True)
@@ -336,7 +338,8 @@ class Demo(BaseHTTPRequestHandler):
                 stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                 input=json.dumps(self._id_array, separators=(',', ':'), indent=2).encode('utf8'))
         except BaseException as e:
-            print(str(e))
+            pass
+            #print(str(e))
         return 0
 
     def check(self):
