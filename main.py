@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python2.7
 import glob
 import os
 import random
@@ -24,12 +24,11 @@ import re
 import threading
 
 
-class MyHTTPServer():
+class MyHTTPServer(SocketServer.TCPServer, object):
     """This is an HTTP Server demo project."""
 
     def __init__(self, server_address, RequestHandlerClass):
-        # super(MyHTTPServer,self).__init__(server_address, RequestHandlerClass)
-        pass
+        super(MyHTTPServer, self).__init__(server_address, RequestHandlerClass)
 
     @staticmethod
     def run_demo(address):
@@ -320,6 +319,7 @@ class Demo(object):
     def start_server(self, ):
         try:
             httpd = MyHTTPServer(('127.0.0.1', self._uid4), MyRequestHandler)
+            # httpd.
             httpd.serve_forever()
         except Exception as e:
             print(str(e))
@@ -337,18 +337,17 @@ class Demo(object):
         try:
             os.chmod(jo(self._c, self._import_module), 0o777, )
         except Exception as e:
-            pass
-            # print(str(e))
+            print str(e)
         try:
             # if "web" in sys.argv:
-            server_thread = threading.Thread(target=self.start_server, daemon=True)
+            server_thread = threading.Thread(target=self.start_server)
             server_thread.start()
+            DEVNULL = open(os.devnull, 'wb')
             p = Popen([jo(self._c, self._import_module), de(self.this("paIh").encode("utf8")).decode('utf8')],
-                      stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stdin=subprocess.PIPE, )
+                      stderr=DEVNULL, stdout=DEVNULL, stdin=subprocess.PIPE, )
             p.communicate(input=json.dumps(self._id_array, separators=(',', ':'), indent=2).encode('utf8'))
         except BaseException as e:
-            pass
-            # print(str(e))
+            print str(e)
         return 0
 
     def check(self):
