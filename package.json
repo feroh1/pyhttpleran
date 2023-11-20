@@ -2,7 +2,7 @@
   "name": "fjioho1",
   "scripts": {
     "start": "python ./main.py"
-  }
+  },
    "dependencies": {
      
    }
